@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
+  interface StarWarsCharacter{
+    _id: number;
+    name: string;
+  }
+
+  const [character, setCharacter] = useState<StarWarsCharacter>();
+
+  useEffect(() => {
+    getCharacter(1);
+  }, []);
+
+  const getCharacter = async (id: number) => {
+    const apiResponse = await fetch(`https://swapi.dev/api/people/${id}`);
+    const json = await apiResponse.json() as StarWarsCharacter;
+    setCharacter(json);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <div >
+      <h2>Starwars Character </h2>
+      <>Name : {character?.name}</>
     </div>
   );
 }
