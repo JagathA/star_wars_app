@@ -3,11 +3,10 @@ import './App.css';
 
 const App: React.FC = () => {
   interface StarWarsCharacter{
-    _id: number;
     name: string;
   }
 
-  const [character, setCharacter] = useState<StarWarsCharacter>();
+  const [character, setCharacter] = useState<string>("");
 
   useEffect(() => {
     getCharacter(1);
@@ -15,15 +14,17 @@ const App: React.FC = () => {
 
   const getCharacter = async (id: number) => {
     const apiResponse = await fetch(`https://swapi.dev/api/people/${id}`);
-    const json = await apiResponse.json() as StarWarsCharacter;
-    setCharacter(json);
+    const json = await apiResponse.json();
+    setCharacter(json.name);
+    console.log("*********** =>", json);
+    console.log("****** =>",json.name);
   };
 
   return (
 
     <div >
-      <h2>Starwars Character </h2>
-      <>Name : {character?.name}</>
+      <h1>Starwars Character</h1>
+      <h2>Name : {character}</h2>
     </div>
   );
 }
