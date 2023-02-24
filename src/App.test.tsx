@@ -4,12 +4,12 @@ import App from './App';
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-const charName = "Luke Skywalker";
+const charName = "Luke Skywalker Test";
 
 const server = setupServer(
   rest.get('https://swapi.dev/api/people/1', (req, res, ctx) => {
     return res(ctx.json({
-      "name": "Luke Skywalker"
+      "name": charName
     }))
   }),
 )
@@ -29,7 +29,6 @@ test('Check character data is rendered correctly', async () => {
   render(<App />);
 
   await screen.findByText(/Starwars Character/i);
-  await screen.findByText(/Name :/i);
-  const textElement = screen.getByText(/Luke Skywalker/i);
+  const textElement = screen.getByText("Name : Luke Skywalker Test");
   expect(textElement).toBeInTheDocument();
 });
