@@ -28,7 +28,7 @@ test('Check title is rendered correctly', () => {
 test('Check character data is rendered correctly', async () => {
   render(<App />);
 
-  await screen.findByText(/Starwars Character/i);
+  await screen.findByText(/Name : Luke Skywalker Test/i);
   const textElement = screen.getByText("Name : Luke Skywalker Test");
   expect(textElement).toBeInTheDocument();
 });
