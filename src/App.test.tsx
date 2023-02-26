@@ -32,3 +32,18 @@ test('Check character data is rendered correctly', async () => {
   const textElement = screen.getByText("Name : Luke Skywalker Test");
   expect(textElement).toBeInTheDocument();
 });
+
+
+test('Check error is rendered correctly', async () => {
+  server.use(
+    rest.get('https://swapi.dev/api/people/1', (_req, res, ctx) => {
+      return res(ctx.status(500));
+    }),
+  );
+
+  render(<App />);
+
+  await screen.findByText(/Oops... something went wrong, try again/i);
+  const textElement = screen.getByText("Oops... something went wrong, try again");
+  expect(textElement).toBeInTheDocument();
+});
