@@ -29,21 +29,23 @@ const App: React.FC = () => {
           setErrorMsg(`Oops... something went wrong, try again`);
         }
         else if (apiResponse.status === 418) {
-          setErrorMsg(` 418 I'm a teapot`);
+          setErrorMsg(`418 I'm a teapot`);
         }
       }
     } catch (error) {
-      console.log("API error => ", error);
-    };
+      console.log("error => ", error);
+    }
 
-    return (
+  };
 
-      <div >
-        <h1>Starwars Character</h1>
-        <h2>Name : {character}</h2>
-        <h3>{errorMsg}</h3>
-      </div>
-    );
-  }
+  return (
 
-  export default App;
+    <div >
+      <h1>Starwars Character</h1>
+      <h2>Name : {character}</h2>
+      <h3>{errorMsg}</h3>
+    </div>
+  );
+}
+
+export default App;
