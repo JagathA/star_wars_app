@@ -20,7 +20,7 @@ afterAll(() => server.close())
 
 test('Check title is rendered correctly', () => {
   render(<App />);
-  const textElement = screen.getByText(/Starwars Character/i);
+  const textElement = screen.getByText("Starwars Character");
   expect(textElement).toBeInTheDocument();
 });
 
@@ -34,7 +34,7 @@ test('Check character data is rendered correctly', async () => {
 });
 
 
-test('Check error is rendered correctly', async () => {
+test('Check 500 error is rendered correctly', async () => {
   server.use(
     rest.get('https://swapi.dev/api/people/1', (_req, res, ctx) => {
       return res(ctx.status(500));
@@ -43,7 +43,21 @@ test('Check error is rendered correctly', async () => {
 
   render(<App />);
 
-  await screen.findByText(/Oops... something went wrong, try again/i);
+  await screen.findByText("Oops... something went wrong, try again");
   const textElement = screen.getByText("Oops... something went wrong, try again");
+  expect(textElement).toBeInTheDocument();
+});
+
+test('Check 418 error is rendered correctly', async () => {
+  server.use(
+    rest.get('https://swapi.dev/api/people/1', (_req, res, ctx) => {
+      return res(ctx.status(418));
+    }),
+  );
+
+  render(<App />);
+
+  await screen.findByText("418 I'm a teapot");
+  const textElement = screen.getByText("418 I'm a teapot");
   expect(textElement).toBeInTheDocument();
 });
